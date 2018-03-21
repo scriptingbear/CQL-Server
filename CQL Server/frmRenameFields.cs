@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CQL_Server
 {
-    public partial class Form1 : Form
+    public partial class frmRenameFields : Form
     {
-        public Form1()
+        public frmRenameFields()
         {
             InitializeComponent();
         }
