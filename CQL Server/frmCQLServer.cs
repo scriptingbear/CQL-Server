@@ -26,6 +26,7 @@ namespace CQL_Server
         }
 
         DataTable dataTable;
+        private const string CAPTION = "CQL Server 2018";
         
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -787,7 +788,111 @@ namespace CQL_Server
 
         }//EditDataGridView()
 
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            var filePath = "";
+            var output = "";
 
 
+            if (dgvExport.RowCount == 0)
+            {
+                return;
+            }
+
+            saveFileDialog1.Title = "Export selected records to file";
+            saveFileDialog1.FileName = "";
+            saveFileDialog1.Filter = "Export files (*.csv)|*.csv";
+            saveFileDialog1.OverwritePrompt = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                filePath = saveFileDialog1.FileName;
+            }
+            else
+            {
+                return;
+            }
+
+
+        /* Can't use Linq to query a DataGridView object but we can
+        * use the GetRowCount() method to count up which records
+        * have been selected for export. But that method works
+        * for records highlighted by the user, not records
+        * for which the Select column has been checked
+        */
+
+        var selectedRecordCount = 0;
+
+        //may come in handy later but can't use to determine which records should be exported
+        //selectedRecordCount = dgvExport.Rows.GetRowCount(DataGridViewElementStates.Selected);
+
+
+        for (int i = 0; i < dgvExport.RowCount; i++)
+        {
+            if ((bool)dgvExport.Rows[i].Cells["colSelect"].Value)
+            {
+                selectedRecordCount += 1;
+            }
+        }//(int i = 0; i < dgvExport.RowCount; i++)
+
+
+            if (MessageBox.Show($"About to export {selectedRecordCount} records. Continue?",
+                                CAPTION, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK) return;
+      
+            //write header to output variable
+            for (int j = 1; j < dgvExport.ColumnCount; j++)
+            {
+                output += dgvExport.Columns[j].HeaderText + ",";
+            }//(int j = 1; j < dgvExport.ColumnCount; j++)
+
+            //strip off final ","
+            output = output.TrimEnd(',');
+            output += Environment.NewLine;
+
+            //write records in csv format
+     
+
+            for (int i = 0; i < dgvExport.RowCount; i++)
+            {
+                if ((bool)dgvExport.Rows[i].Cells["colSelect"].Value)
+                {
+                    for (int j = 1; j < dgvExport.ColumnCount; j++)
+                    {
+                        var line = (string)dgvExport.Rows[i].Cells[j].Value;
+                        if (line != null)
+                        {
+                            if (line.IndexOfAny(new char[] { '"', ',' }) != -1)
+                            {
+                                line = Regex.Replace(line,  "\"", "\"\"");
+                                line = "\"" + line + "\"";
+                            }
+                            
+                            
+                            output += line + ",";
+                            
+                        }
+                        else
+                        {
+                            output += string.Empty + ",";
+                        }//(line != null)
+                    }//(int j = 1; j < dgvExport.ColumnCount; j++)
+
+                    //strip off final ","
+                    output = output.TrimEnd(',');
+                    output += Environment.NewLine;
+                }//((bool)dgvExport.Rows[i].Cells["colSelect"].Value)
+
+            }//(int i = 0; i < dgvExport.RowCount; i++)
+
+            // MessageBox.Show(output);
+                
+            File.WriteAllText(filePath, output);
+            MessageBox.Show("Records have been exported to specified file.", CAPTION, MessageBoxButtons.OK, MessageBoxIcon.Information);
+  
+        }//btnExport_Click()
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FillObjectExplorer();
+        }
     }//frmCQLServer : Form
 }//CQL_Server

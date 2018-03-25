@@ -53,16 +53,19 @@
             this.tvDatabases = new System.Windows.Forms.TreeView();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.dgvExport = new System.Windows.Forms.DataGridView();
-            this.chkSkipFirstRow = new System.Windows.Forms.CheckBox();
             this.cboField = new System.Windows.Forms.ComboBox();
-            this.colSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.btnRenameFields = new System.Windows.Forms.Button();
-            this.chkAll = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnTrim = new System.Windows.Forms.Button();
             this.btnClean = new System.Windows.Forms.Button();
             this.btnToUpper = new System.Windows.Forms.Button();
+            this.dgvExport = new System.Windows.Forms.DataGridView();
+            this.colSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.chkSkipFirstRow = new System.Windows.Forms.CheckBox();
+            this.btnRenameFields = new System.Windows.Forms.Button();
+            this.chkAll = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExport)).BeginInit();
@@ -74,9 +77,10 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctxmnuAddDatabase,
             this.ctxmnuRenameDatabase,
-            this.ctxmnuRemoveDatabase});
+            this.ctxmnuRemoveDatabase,
+            this.refreshToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(168, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(168, 114);
             // 
             // ctxmnuAddDatabase
             // 
@@ -238,32 +242,6 @@
             this.tvDatabases.Click += new System.EventHandler(this.tvDatabases_Click);
             this.tvDatabases.DoubleClick += new System.EventHandler(this.tvDatabases_DoubleClick);
             // 
-            // dgvExport
-            // 
-            this.dgvExport.AllowUserToResizeRows = false;
-            this.dgvExport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvExport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvExport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colSelect});
-            this.dgvExport.Location = new System.Drawing.Point(254, 227);
-            this.dgvExport.Name = "dgvExport";
-            this.dgvExport.RowHeadersWidth = 15;
-            this.dgvExport.Size = new System.Drawing.Size(970, 271);
-            this.dgvExport.TabIndex = 4;
-            // 
-            // chkSkipFirstRow
-            // 
-            this.chkSkipFirstRow.AutoSize = true;
-            this.chkSkipFirstRow.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.chkSkipFirstRow.Checked = true;
-            this.chkSkipFirstRow.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSkipFirstRow.Location = new System.Drawing.Point(115, 37);
-            this.chkSkipFirstRow.Name = "chkSkipFirstRow";
-            this.chkSkipFirstRow.Size = new System.Drawing.Size(121, 17);
-            this.chkSkipFirstRow.TabIndex = 5;
-            this.chkSkipFirstRow.Text = "1st row has headers";
-            this.chkSkipFirstRow.UseVisualStyleBackColor = false;
-            // 
             // cboField
             // 
             this.cboField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -274,47 +252,6 @@
             this.cboField.TabIndex = 6;
             this.toolTip1.SetToolTip(this.cboField, "Select field upon which to perform an operation");
             this.cboField.SelectedIndexChanged += new System.EventHandler(this.cboField_SelectedIndexChanged);
-            // 
-            // colSelect
-            // 
-            this.colSelect.Frozen = true;
-            this.colSelect.HeaderText = "Select";
-            this.colSelect.Name = "colSelect";
-            this.colSelect.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colSelect.Width = 62;
-            // 
-            // btnRenameFields
-            // 
-            this.btnRenameFields.Location = new System.Drawing.Point(133, 19);
-            this.btnRenameFields.Name = "btnRenameFields";
-            this.btnRenameFields.Size = new System.Drawing.Size(75, 23);
-            this.btnRenameFields.TabIndex = 8;
-            this.btnRenameFields.Text = "Rename...";
-            this.btnRenameFields.UseVisualStyleBackColor = true;
-            this.btnRenameFields.Click += new System.EventHandler(this.btnRenameFields_Click);
-            // 
-            // chkAll
-            // 
-            this.chkAll.AutoSize = true;
-            this.chkAll.Location = new System.Drawing.Point(263, 206);
-            this.chkAll.Name = "chkAll";
-            this.chkAll.Size = new System.Drawing.Size(70, 17);
-            this.chkAll.TabIndex = 9;
-            this.chkAll.Text = "Select All";
-            this.chkAll.UseVisualStyleBackColor = true;
-            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnRenameFields);
-            this.groupBox1.Controls.Add(this.cboField);
-            this.groupBox1.Location = new System.Drawing.Point(339, 179);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(217, 42);
-            this.groupBox1.TabIndex = 10;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Fields";
             // 
             // btnTrim
             // 
@@ -349,11 +286,99 @@
             this.btnToUpper.UseVisualStyleBackColor = true;
             this.btnToUpper.Click += new System.EventHandler(this.btnToUpper_Click);
             // 
+            // dgvExport
+            // 
+            this.dgvExport.AllowUserToAddRows = false;
+            this.dgvExport.AllowUserToDeleteRows = false;
+            this.dgvExport.AllowUserToResizeRows = false;
+            this.dgvExport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvExport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvExport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colSelect});
+            this.dgvExport.Location = new System.Drawing.Point(254, 227);
+            this.dgvExport.Name = "dgvExport";
+            this.dgvExport.RowHeadersWidth = 15;
+            this.dgvExport.Size = new System.Drawing.Size(970, 271);
+            this.dgvExport.TabIndex = 4;
+            // 
+            // colSelect
+            // 
+            this.colSelect.Frozen = true;
+            this.colSelect.HeaderText = "Select";
+            this.colSelect.Name = "colSelect";
+            this.colSelect.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colSelect.Width = 62;
+            // 
+            // chkSkipFirstRow
+            // 
+            this.chkSkipFirstRow.AutoSize = true;
+            this.chkSkipFirstRow.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.chkSkipFirstRow.Checked = true;
+            this.chkSkipFirstRow.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSkipFirstRow.Location = new System.Drawing.Point(115, 37);
+            this.chkSkipFirstRow.Name = "chkSkipFirstRow";
+            this.chkSkipFirstRow.Size = new System.Drawing.Size(121, 17);
+            this.chkSkipFirstRow.TabIndex = 5;
+            this.chkSkipFirstRow.Text = "1st row has headers";
+            this.chkSkipFirstRow.UseVisualStyleBackColor = false;
+            // 
+            // btnRenameFields
+            // 
+            this.btnRenameFields.Location = new System.Drawing.Point(133, 19);
+            this.btnRenameFields.Name = "btnRenameFields";
+            this.btnRenameFields.Size = new System.Drawing.Size(75, 23);
+            this.btnRenameFields.TabIndex = 8;
+            this.btnRenameFields.Text = "Rename...";
+            this.btnRenameFields.UseVisualStyleBackColor = true;
+            this.btnRenameFields.Click += new System.EventHandler(this.btnRenameFields_Click);
+            // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.Location = new System.Drawing.Point(263, 206);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(70, 17);
+            this.chkAll.TabIndex = 9;
+            this.chkAll.Text = "Select All";
+            this.chkAll.UseVisualStyleBackColor = true;
+            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnRenameFields);
+            this.groupBox1.Controls.Add(this.cboField);
+            this.groupBox1.Location = new System.Drawing.Point(339, 179);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(217, 42);
+            this.groupBox1.TabIndex = 10;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Fields";
+            // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(1127, 198);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.TabIndex = 14;
+            this.btnExport.Text = "Export";
+            this.toolTip1.SetToolTip(this.btnExport, "Export selected records to a csv file");
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            // 
             // frmCQLServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1225, 509);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnToUpper);
             this.Controls.Add(this.btnClean);
             this.Controls.Add(this.btnTrim);
@@ -417,5 +442,8 @@
         private System.Windows.Forms.Button btnTrim;
         private System.Windows.Forms.Button btnClean;
         private System.Windows.Forms.Button btnToUpper;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
     }
 }
