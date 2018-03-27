@@ -34,6 +34,7 @@
             this.ctxmnuAddDatabase = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxmnuRenameDatabase = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxmnuRemoveDatabase = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,15 +58,15 @@
             this.btnTrim = new System.Windows.Forms.Button();
             this.btnClean = new System.Windows.Forms.Button();
             this.btnToUpper = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             this.dgvExport = new System.Windows.Forms.DataGridView();
             this.colSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.chkSkipFirstRow = new System.Windows.Forms.CheckBox();
             this.btnRenameFields = new System.Windows.Forms.Button();
             this.chkAll = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnExport = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.refreshToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExport)).BeginInit();
@@ -78,6 +79,7 @@
             this.ctxmnuAddDatabase,
             this.ctxmnuRenameDatabase,
             this.ctxmnuRemoveDatabase,
+            this.renameTableToolStripMenuItem,
             this.refreshToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(168, 114);
@@ -91,6 +93,7 @@
             // 
             // ctxmnuRenameDatabase
             // 
+            this.ctxmnuRenameDatabase.Enabled = false;
             this.ctxmnuRenameDatabase.Name = "ctxmnuRenameDatabase";
             this.ctxmnuRenameDatabase.Size = new System.Drawing.Size(167, 22);
             this.ctxmnuRenameDatabase.Text = "Rename database";
@@ -102,6 +105,13 @@
             this.ctxmnuRemoveDatabase.Size = new System.Drawing.Size(167, 22);
             this.ctxmnuRemoveDatabase.Text = "Remove database";
             this.ctxmnuRemoveDatabase.Click += new System.EventHandler(this.ctxmnuRemoveDatabase_Click);
+            // 
+            // refreshToolStripMenuItem
+            // 
+            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -178,13 +188,14 @@
             // tableNameToolStripMenuItem
             // 
             this.tableNameToolStripMenuItem.Name = "tableNameToolStripMenuItem";
-            this.tableNameToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.tableNameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.tableNameToolStripMenuItem.Text = "Rename table";
+            this.tableNameToolStripMenuItem.Click += new System.EventHandler(this.tableNameToolStripMenuItem_Click);
             // 
             // fieldNamesToolStripMenuItem
             // 
             this.fieldNamesToolStripMenuItem.Name = "fieldNamesToolStripMenuItem";
-            this.fieldNamesToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.fieldNamesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fieldNamesToolStripMenuItem.Text = "Rename fields";
             // 
             // toolsToolStripMenuItem
@@ -286,6 +297,17 @@
             this.btnToUpper.UseVisualStyleBackColor = true;
             this.btnToUpper.Click += new System.EventHandler(this.btnToUpper_Click);
             // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(1127, 198);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.TabIndex = 14;
+            this.btnExport.Text = "Export";
+            this.toolTip1.SetToolTip(this.btnExport, "Export selected records to a csv file");
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // dgvExport
             // 
             this.dgvExport.AllowUserToAddRows = false;
@@ -355,23 +377,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Fields";
             // 
-            // btnExport
+            // renameTableToolStripMenuItem
             // 
-            this.btnExport.Location = new System.Drawing.Point(1127, 198);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
-            this.btnExport.TabIndex = 14;
-            this.btnExport.Text = "Export";
-            this.toolTip1.SetToolTip(this.btnExport, "Export selected records to a csv file");
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-            // 
-            // refreshToolStripMenuItem
-            // 
-            this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.refreshToolStripMenuItem.Text = "Refresh";
-            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
+            this.renameTableToolStripMenuItem.Enabled = false;
+            this.renameTableToolStripMenuItem.Name = "renameTableToolStripMenuItem";
+            this.renameTableToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.renameTableToolStripMenuItem.Text = "Rename table";
+            this.renameTableToolStripMenuItem.Click += new System.EventHandler(this.renameTableToolStripMenuItem_Click);
             // 
             // frmCQLServer
             // 
@@ -445,5 +457,6 @@
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem refreshToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem renameTableToolStripMenuItem;
     }
 }

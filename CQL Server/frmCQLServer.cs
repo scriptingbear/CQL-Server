@@ -111,6 +111,7 @@ namespace CQL_Server
             if (tvDatabases.SelectedNode.Parent == null) return;
 
             treeNode = tvDatabases.SelectedNode;
+            if (treeNode.Tag.ToString() == "FILE") return;
 
             //open or create base level Registry key
             cqlServerKey = Registry.CurrentUser.OpenSubKey("CQL Server");
@@ -244,16 +245,21 @@ namespace CQL_Server
 
         private void tvDatabases_Click(object sender, EventArgs e)
         {
+            
+ 
 
         }//tvDatabases_Click()
 
         private void tvDatabases_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeNode node = tvDatabases.SelectedNode;
+
             if (node.Tag != null)
             {
                 if (node.Tag.ToString() == "FILE")
                 {
+                    renameTableToolStripMenuItem.Enabled = true;
+                    ctxmnuRenameDatabase.Enabled = false;
                     var fullPath = node.Parent.Tag.ToString() + @"\" + node.Text;
                     StreamReader reader = new StreamReader(fullPath);
                     var toolText = "";
@@ -271,7 +277,11 @@ namespace CQL_Server
                     node.ToolTipText = toolText;
 
                     //load csv file into datagridview control
-
+                }
+                else
+                {
+                    renameTableToolStripMenuItem.Enabled = false;
+                    ctxmnuRenameDatabase.Enabled = true;
                 }//(node.Tag.ToString() == "FILE")
             }//(node.Tag != null)
         }//tvDatabases_AfterSelect()
@@ -893,6 +903,37 @@ namespace CQL_Server
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FillObjectExplorer();
+        }
+
+        private void tableNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RenameTable();
+        }//tableNameToolStripMenuItem_Click()
+
+        private void RenameTable()
+        {
+            //rename file corresponding to selected TreeView node
+            TreeNode node = tvDatabases.SelectedNode;
+            if (node.Tag != null)
+            {
+                if (node.Tag.ToString() == "FILE")
+                {
+                    var fullPath = node.Parent.Tag.ToString() + @"\" + node.Text;
+                    FileInfo fileInfo = new FileInfo(fullPath);
+                    var oldFilename = fileInfo.Name;
+                    var newFilename = Microsoft.VisualBasic.Interaction.InputBox("Enter new filename", CAPTION, oldFilename);
+                    if (newFilename == string.Empty) return;
+                    if (newFilename.Trim().ToLower() == oldFilename.ToLower()) return;
+                    var parentPath = Directory.GetParent(fullPath).ToString();
+                    System.IO.File.Move(fullPath, Path.Combine(parentPath, newFilename));
+                    FillObjectExplorer();
+                }//if (node.Tag.ToString() == "FILE")
+            }//if (node.Tag != null)
+        }//RenameTable()
+
+        private void renameTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RenameTable();
         }
     }//frmCQLServer : Form
 }//CQL_Server
