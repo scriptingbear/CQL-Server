@@ -362,7 +362,7 @@ namespace CQL_Server
                     //populate header column
                     for (int i = 0; i <= (currentRow.Length - 1); i++)
                     {
-                        dgvExport.Columns[i + 1].HeaderText = currentRow[i];
+                        dgvExport.Columns[i + 2].HeaderText = currentRow[i];
                     }
                     return;
                 }//(chkSkipFirstRow.Checked)
@@ -373,9 +373,10 @@ namespace CQL_Server
             DataGridViewRow dataGridViewRow = new DataGridViewRow();
             dataGridViewRow.CreateCells(dgvExport);
             dataGridViewRow.Cells[0].Value = false;
+            dataGridViewRow.Cells[1].Value = dgvExport.RowCount + 1;
             for (int i = 0; i <= (currentRow.Length - 1); i++)
             {
-                dataGridViewRow.Cells[i + 1].Value = currentRow[i];
+                dataGridViewRow.Cells[i + 2].Value = currentRow[i];
             }
 
            dgvExport.Rows.Add(dataGridViewRow);
@@ -384,7 +385,8 @@ namespace CQL_Server
 
         private void AdjustDataGridView(int length)
         {
-            int exportColumnCount = dgvExport.ColumnCount - 1;
+            //reserve one column for Select and one column for row number
+            int exportColumnCount = dgvExport.ColumnCount - 2;
             if (length > exportColumnCount)
             {
                 for (int fieldCount = 0; fieldCount < (length - exportColumnCount); fieldCount++)
@@ -394,7 +396,8 @@ namespace CQL_Server
                      * it should be named Field4, which means we must include the value of exportColumnCount
                      * in determing the header for the new column
                      */
-                    dgvExport.Columns.Add($"Field{exportColumnCount + fieldCount + 1}", $"Field{exportColumnCount + fieldCount + 1}");
+                    dgvExport.Columns.Add($"Field{exportColumnCount + fieldCount + 2}",
+                        $"Field{exportColumnCount + fieldCount + 2}");
                 }//(int fieldCount = 0; fieldCount < (length - exportColumnCount); fieldCount++)
             }//(length > exportColumnCount)
         }////AdjustDataGridView()
@@ -407,10 +410,10 @@ namespace CQL_Server
                 dgvExport.Rows.Clear();
             }
 
-            //remove all columns except Select
-            while (dgvExport.ColumnCount > 1)
+            //remove all columns except Select and Row
+            while (dgvExport.ColumnCount > 2)
             {
-                dgvExport.Columns.RemoveAt(1);
+                dgvExport.Columns.RemoveAt(2);
             }
         }//ClearDataGridView
 
@@ -537,9 +540,10 @@ namespace CQL_Server
             //if All is selected, then reset DGV control to default
             //MessageBox.Show(cboField.Text);
             //first column (Select) is frozen so can't scroll to it
+            //new second column (Row) is also frozen so can't scroll to it
 
             //reset visibility of all columns
-            for (int i = 1; i < dgvExport.ColumnCount; i++)
+            for (int i = 2; i < dgvExport.ColumnCount; i++)
             {
                 dgvExport.Columns[i].Visible = true;
             }
@@ -547,7 +551,7 @@ namespace CQL_Server
             if (cboField.SelectedIndex != 0)
             {
 
-                for (int i = 1; i < cboField.SelectedIndex; i++)
+                for (int i = 2; i < cboField.SelectedIndex + 1; i++)
                 {
                     dgvExport.Columns[i].Visible = false;
                     //dgvExport.FirstDisplayedScrollingColumnIndex = cboField.SelectedIndex;
@@ -555,7 +559,7 @@ namespace CQL_Server
             }
             else
             {
-                dgvExport.FirstDisplayedScrollingColumnIndex = 1;
+                dgvExport.FirstDisplayedScrollingColumnIndex = 2;
             }//(cboField.SelectedIndex != 0)
         }//cboField_SelectedIndexChanged()
 
@@ -564,7 +568,7 @@ namespace CQL_Server
             //populate field name dropdown
             cboField.Items.Clear();
             cboField.Items.Add("All");
-            for (int i = 1; i <= dgvExport.ColumnCount - 1; i++)
+            for (int i = 2; i <= dgvExport.ColumnCount - 1; i++)
             {
                 cboField.Items.Add(dgvExport.Columns[i].HeaderText);
             }
@@ -602,7 +606,7 @@ namespace CQL_Server
                         dataGridViewRow = frm.dgvRenameFields.Rows[i];
                         if (dataGridViewRow.Cells[1].Value != null)
                         {
-                            int colPosition = int.Parse(dataGridViewRow.Tag.ToString());
+                            int colPosition = int.Parse(dataGridViewRow.Tag.ToString()) + 1;
                             dgvExport.Columns[colPosition].HeaderText = dataGridViewRow.Cells[1].Value.ToString();
                         }
                     }//for (int i = 0; i < frm.dgvRenameFields.RowCount; i++)
