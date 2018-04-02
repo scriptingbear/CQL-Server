@@ -48,7 +48,7 @@
             this.tableNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fieldNamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.countRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filterRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
@@ -61,13 +61,15 @@
             this.btnToUpper = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.dgvExport = new System.Windows.Forms.DataGridView();
+            this.colSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chkSkipFirstRow = new System.Windows.Forms.CheckBox();
             this.btnRenameFields = new System.Windows.Forms.Button();
             this.chkAll = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.colSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colRow = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtFilter = new System.Windows.Forms.TextBox();
+            this.btnFilter = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExport)).BeginInit();
@@ -210,16 +212,16 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.countRecordsToolStripMenuItem});
+            this.filterRecordsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
-            // countRecordsToolStripMenuItem
+            // filterRecordsToolStripMenuItem
             // 
-            this.countRecordsToolStripMenuItem.Name = "countRecordsToolStripMenuItem";
-            this.countRecordsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.countRecordsToolStripMenuItem.Text = "Filter records";
+            this.filterRecordsToolStripMenuItem.Name = "filterRecordsToolStripMenuItem";
+            this.filterRecordsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.filterRecordsToolStripMenuItem.Text = "Filter records";
             // 
             // helpToolStripMenuItem
             // 
@@ -333,6 +335,23 @@
             this.dgvExport.Size = new System.Drawing.Size(970, 271);
             this.dgvExport.TabIndex = 4;
             // 
+            // colSelect
+            // 
+            this.colSelect.Frozen = true;
+            this.colSelect.HeaderText = "Select";
+            this.colSelect.Name = "colSelect";
+            this.colSelect.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colSelect.Width = 62;
+            // 
+            // colRow
+            // 
+            this.colRow.Frozen = true;
+            this.colRow.HeaderText = "Row";
+            this.colRow.Name = "colRow";
+            this.colRow.ReadOnly = true;
+            this.colRow.Width = 54;
+            // 
             // chkSkipFirstRow
             // 
             this.chkSkipFirstRow.AutoSize = true;
@@ -378,28 +397,31 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Fields";
             // 
-            // colSelect
+            // txtFilter
             // 
-            this.colSelect.Frozen = true;
-            this.colSelect.HeaderText = "Select";
-            this.colSelect.Name = "colSelect";
-            this.colSelect.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colSelect.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colSelect.Width = 62;
+            this.txtFilter.Location = new System.Drawing.Point(886, 198);
+            this.txtFilter.Name = "txtFilter";
+            this.txtFilter.Size = new System.Drawing.Size(146, 20);
+            this.txtFilter.TabIndex = 15;
             // 
-            // colRow
+            // btnFilter
             // 
-            this.colRow.Frozen = true;
-            this.colRow.HeaderText = "Row";
-            this.colRow.Name = "colRow";
-            this.colRow.ReadOnly = true;
-            this.colRow.Width = 54;
+            this.btnFilter.Location = new System.Drawing.Point(805, 196);
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Size = new System.Drawing.Size(75, 23);
+            this.btnFilter.TabIndex = 16;
+            this.btnFilter.Text = "Filter";
+            this.toolTip1.SetToolTip(this.btnFilter, "Filter selected field for value");
+            this.btnFilter.UseVisualStyleBackColor = true;
+            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
             // frmCQLServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1225, 509);
+            this.Controls.Add(this.btnFilter);
+            this.Controls.Add(this.txtFilter);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnToUpper);
             this.Controls.Add(this.btnClean);
@@ -443,7 +465,7 @@
         private System.Windows.Forms.ToolStripMenuItem tableNameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fieldNamesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem countRecordsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem filterRecordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Label label1;
@@ -469,5 +491,7 @@
         private System.Windows.Forms.ToolStripMenuItem renameTableToolStripMenuItem;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colSelect;
         private System.Windows.Forms.DataGridViewTextBoxColumn colRow;
+        private System.Windows.Forms.TextBox txtFilter;
+        private System.Windows.Forms.Button btnFilter;
     }
 }

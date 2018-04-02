@@ -548,7 +548,7 @@ namespace CQL_Server
                 dgvExport.Columns[i].Visible = true;
             }
 
-            if (cboField.SelectedIndex != 0)
+            if (cboField.SelectedIndex > 0)
             {
 
                 for (int i = 2; i < cboField.SelectedIndex + 1; i++)
@@ -560,7 +560,7 @@ namespace CQL_Server
             else
             {
                 dgvExport.FirstDisplayedScrollingColumnIndex = 2;
-            }//(cboField.SelectedIndex != 0)
+            }//(cboField.SelectedIndex > 0)
         }//cboField_SelectedIndexChanged()
 
         private void UpdateFieldList()
@@ -641,111 +641,23 @@ namespace CQL_Server
         {
             EditDataGridView(DGViewEditType.Trim);
 
-            //if (cboField.SelectedIndex != -1)
-            //{
-            //    if (cboField.Text != "All")
-            //    {
-            //        for (int i = 0; i < dgvExport.RowCount; i++)
-            //        {
-
-            //            if (dgvExport.Rows[i].Cells[cboField.Text].Value != null)
-            //            {
-            //                string temp = dgvExport.Rows[i].Cells[cboField.Text].Value.ToString();
-            //                dgvExport.Rows[i].Cells[cboField.Text].Value = temp.Trim();
-            //            }
-            //        }//(int i = 0; i < dgvExport.RowCount; i++)
-            //    }
-            //    else
-            //    {
-            //        for (int i = 0; i < dgvExport.RowCount; i++)
-            //        {
-            //            for (int j = 1; j < dgvExport.ColumnCount; j++)
-            //            {
-            //                if (dgvExport.Rows[i].Cells[j].Value != null)
-            //                {
-            //                    string temp = dgvExport.Rows[i].Cells[j].Value.ToString();
-            //                    dgvExport.Rows[i].Cells[j].Value = temp.Trim();
-            //                }
-            //            }
-            //        }//(int i = 0; i < dgvExport.RowCount; i++)
-
-            //    }//(cboField.Text != "All")
-            //}//(cboField.SelectedIndex != -1)
         }//btnTrim_Click()
 
         private void btnClean_Click(object sender, EventArgs e)
         {
             EditDataGridView(DGViewEditType.Clean);
-            //if (cboField.SelectedIndex != -1)
-            //{
-            //    if (cboField.Text != "All")
-            //    {
-            //        for (int i = 0; i < dgvExport.RowCount; i++)
-            //        {
-
-            //            if (dgvExport.Rows[i].Cells[cboField.Text].Value != null)
-            //            {
-            //                string temp = dgvExport.Rows[i].Cells[cboField.Text].Value.ToString();
-            //                dgvExport.Rows[i].Cells[cboField.Text].Value = Regex.Replace(temp, @"[^\w -]", "");
-            //            }
-            //        }//(int i = 0; i < dgvExport.RowCount; i++)
-            //    }
-            //    else
-            //    {
-            //        for (int i = 0; i < dgvExport.RowCount; i++)
-            //        {
-            //            for (int j = 1; j < dgvExport.ColumnCount; j++)
-            //            {
-            //                if (dgvExport.Rows[i].Cells[j].Value != null)
-            //                {
-            //                    string temp = dgvExport.Rows[i].Cells[j].Value.ToString();
-            //                    dgvExport.Rows[i].Cells[j].Value = Regex.Replace(temp, @"[^\w -]", "");
-            //                }
-            //            }
-            //        }//(int i = 0; i < dgvExport.RowCount; i++)
-
-            //    }//(cboField.Text != "All")
-            //}//(cboField.SelectedIndex != -1)
+            
         }//btnClean_Click()
 
         private void btnToUpper_Click(object sender, EventArgs e)
         {
             EditDataGridView(DGViewEditType.Upper);
-            //if (cboField.SelectedIndex != -1)
-            //{
-            //    if (cboField.Text != "All")
-            //    {
-            //        for (int i = 0; i < dgvExport.RowCount; i++)
-            //        {
-
-            //            if (dgvExport.Rows[i].Cells[cboField.Text].Value != null)
-            //            {
-            //                string temp = dgvExport.Rows[i].Cells[cboField.Text].Value.ToString().ToUpper();
-            //                dgvExport.Rows[i].Cells[cboField.Text].Value = temp;
-            //            }
-            //        }//(int i = 0; i < dgvExport.RowCount; i++)
-            //    }
-            //    else
-            //    {
-            //        for (int i = 0; i < dgvExport.RowCount; i++)
-            //        {
-            //            for (int j = 1; j < dgvExport.ColumnCount; j++)
-            //            {
-            //                if (dgvExport.Rows[i].Cells[j].Value != null)
-            //                {
-            //                    string temp = dgvExport.Rows[i].Cells[j].Value.ToString().ToUpper();
-            //                    dgvExport.Rows[i].Cells[j].Value = temp;
-            //                }
-            //            }//(int j = 1; j < dgvExport.ColumnCount; j++)
-            //        }//(int i = 0; i < dgvExport.RowCount; i++)
-
-            //    }//(cboField.Text != "All")
-            //}//(cboField.SelectedIndex != -1)
+           
         }//btnToUpper_Click()
 
         private void EditDataGridView(DGViewEditType type)
         {
-            if (cboField.SelectedIndex != -1)
+            if (cboField.SelectedIndex > 0)
             {
                 if (cboField.Text != "All")
                 {
@@ -798,7 +710,7 @@ namespace CQL_Server
                         }//for (int j = 1; j < dgvExport.ColumnCount; j++)
                     }//for (int i = 0; i < dgvExport.RowCount; i++)
                 }//if (cboField.Text != "All")
-            }//if (cboField.SelectedIndex != -1)
+            }//if (cboField.SelectedIndex > 0)
 
         }//EditDataGridView()
 
@@ -938,6 +850,18 @@ namespace CQL_Server
         private void renameTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RenameTable();
+        }
+
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            if (cboField.SelectedIndex > 0)
+            {
+                if (txtFilter.Text.Trim() != string.Empty)
+                {
+                    DataGridViewColumn dataGridViewColumn = dgvExport.Columns[cboField.SelectedIndex + 1];
+                    MessageBox.Show(dataGridViewColumn.HeaderText);
+                }
+            }
         }
     }//frmCQLServer : Form
 }//CQL_Server
