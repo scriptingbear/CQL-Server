@@ -725,6 +725,36 @@ namespace CQL_Server
                 return;
             }
 
+            
+
+
+        /* Can't use Linq to query a DataGridView object but we can
+        * use the GetRowCount() method to count up which records
+        * have been selected for export. But that method works
+        * for records highlighted by the user, not records
+        * for which the Select column has been checked
+        */
+
+            var selectedRecordCount = 0;
+
+            //may come in handy later but can't use to determine which records should be exported
+            //selectedRecordCount = dgvExport.Rows.GetRowCount(DataGridViewElementStates.Selected);
+
+
+            for (int i = 0; i < dgvExport.RowCount; i++)
+            {
+                if ((bool)dgvExport.Rows[i].Cells["colSelect"].Value)
+                {
+                    selectedRecordCount += 1;
+                }
+            }//(int i = 0; i < dgvExport.RowCount; i++)
+
+            if (selectedRecordCount == 0)
+            {
+                MessageBox.Show("No records selected for export.", CAPTION, MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                return;
+            }
+
             saveFileDialog1.Title = "Export selected records to file";
             saveFileDialog1.FileName = "";
             saveFileDialog1.Filter = "Export files (*.csv)|*.csv";
@@ -737,29 +767,6 @@ namespace CQL_Server
             {
                 return;
             }
-
-
-        /* Can't use Linq to query a DataGridView object but we can
-        * use the GetRowCount() method to count up which records
-        * have been selected for export. But that method works
-        * for records highlighted by the user, not records
-        * for which the Select column has been checked
-        */
-
-        var selectedRecordCount = 0;
-
-        //may come in handy later but can't use to determine which records should be exported
-        //selectedRecordCount = dgvExport.Rows.GetRowCount(DataGridViewElementStates.Selected);
-
-
-        for (int i = 0; i < dgvExport.RowCount; i++)
-        {
-            if ((bool)dgvExport.Rows[i].Cells["colSelect"].Value)
-            {
-                selectedRecordCount += 1;
-            }
-        }//(int i = 0; i < dgvExport.RowCount; i++)
-
 
             if (MessageBox.Show($"About to export {selectedRecordCount} records. Continue?",
                                 CAPTION, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK) return;
@@ -775,7 +782,6 @@ namespace CQL_Server
             output += Environment.NewLine;
 
             //write records in csv format
-     
 
             for (int i = 0; i < dgvExport.RowCount; i++)
             {
@@ -790,11 +796,8 @@ namespace CQL_Server
                             {
                                 line = Regex.Replace(line,  "\"", "\"\"");
                                 line = "\"" + line + "\"";
-                            }
-                            
-                            
-                            output += line + ",";
-                            
+                            }//if (line.IndexOfAny(new char[] { '"', ',' }) != -1)
+                            output += line + ","; 
                         }
                         else
                         {
@@ -856,12 +859,38 @@ namespace CQL_Server
         {
             if (cboField.SelectedIndex > 0)
             {
-                if (txtFilter.Text.Trim() != string.Empty)
+                if (btnFilter.Text == "Filter")
                 {
-                    DataGridViewColumn dataGridViewColumn = dgvExport.Columns[cboField.SelectedIndex + 1];
-                    MessageBox.Show(dataGridViewColumn.HeaderText);
+                    if (txtFilter.Text.Trim() != string.Empty)
+                    {
+                        for (int i = 0; i < dgvExport.RowCount; i++)
+                        {
+                            
+                            if (Regex.IsMatch(dgvExport.Rows[i].Cells[cboField.SelectedIndex + 1].Value.ToString(), ".*" 
+                                      + txtFilter.Text + ".*", RegexOptions.IgnoreCase))
+                            {
+                                dgvExport.Rows[i].Visible = true;
+                            }
+                            else
+                            {
+                                dgvExport.Rows[i].Visible = false;
+                            }//if (Regex.IsMatch(dgvExport.Rows[i].Cells[cboField.SelectedIndex + 1].Value.ToString()
+                        }//for (int i = 0; i < dgvExport.RowCount; i++)
+                        btnFilter.Text = "Reset";
+                    }//if (txtFilter.Text.Trim() != string.Empty)
                 }
-            }
-        }
+                else
+                {
+                    for (int i = 0; i < dgvExport.RowCount; i++)
+                    {
+                        dgvExport.Rows[i].Visible = true;
+                    }
+
+                    dgvExport.FirstDisplayedScrollingRowIndex = 1;
+                    btnFilter.Text = "Filter";
+
+                }//if (btnFilter.Text == "Filter")
+            }//if (cboField.SelectedIndex > 0)
+        }//btnFilter_Click()
     }//frmCQLServer : Form
 }//CQL_Server
